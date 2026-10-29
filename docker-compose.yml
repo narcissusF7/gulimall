@@ -1,0 +1,34 @@
+version: "3.8"
+
+# 一键启动谷粒商城骨架依赖：Nacos 注册中心 + MySQL
+# 使用：docker-compose up -d   （停止：docker-compose down）
+
+services:
+  nacos:
+    image: nacos/nacos-server:v2.2.3
+    container_name: gulimall-nacos
+    environment:
+      - MODE=standalone
+      - JVM_XMS=512m
+      - JVM_XMX=512m
+    ports:
+      - "8848:8848"   # 主端口（配置/注册 HTTP）
+      - "9848:9848"   # gRPC 客户端端口（Nacos 2.x 必需）
+      - "9849:9849"   # gRPC 客户端端口（Nacos 2.x 必需）
+    restart: always
+
+  mysql:
+    image: mysql:8.0.33
+    container_name: gulimall-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: always
