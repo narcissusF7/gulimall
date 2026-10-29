@@ -1,0 +1,27 @@
+# ---- Maven 构建产物 ----
+target/
+*.jar
+*.war
+*.original
+*.class
+
+# ---- IDE ----
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+
+# ---- 日志 ----
+logs/
+*.log
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
+
+# ---- WorkBuddy ----
+.workbuddy/
